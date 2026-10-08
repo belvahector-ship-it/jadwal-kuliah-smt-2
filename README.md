@@ -2,15 +2,14 @@
 
 Web statis untuk semester **2026-2027 Ganjil** (S2 MTI 48 Reg). Tanpa backend dan tanpa build step: cukup HTML, CSS, dan JavaScript.
 
-Halamannya **pasif**: hanya menampilkan informasi, tanpa tombol, form, atau link yang bisa diklik pengunjung.
+Halamannya **baca-saja**: pengunjung bisa masuk kelas lewat tombol link dan menyalin link, tapi tidak bisa mencentang, menambah, atau mengubah isi apa pun.
 
 ## Isi halaman
 
-- **Kelas berikutnya** atau yang sedang berlangsung, dengan hitung mundur.
+- **Kelas berikutnya** atau yang sedang berlangsung, dengan hitung mundur dan tombol *Masuk Google Meet*.
 - **Hari ini**: daftar kelas hari ini beserta statusnya.
-- **Tugas**: tugas dari `data.js` dengan deadline, keterangan, dan langkah pengerjaan.
-- **Jadwal mingguan** Senin–Sabtu.
-- **Mata kuliah**: kode, SKS, dosen, platform, dan link kelas (ditampilkan sebagai teks).
+- **Mata kuliah & tugas**: kode, SKS, dosen, tombol masuk/salin link, dan di bawahnya tugas mata kuliah itu (deadline, keterangan, langkah pengerjaan).
+- **Jadwal mingguan** Senin–Sabtu; tiap slot membuka link kelasnya.
 - Mode gelap mengikuti pengaturan perangkat. Bisa di-install di HP (PWA) dan tetap bisa dibuka saat offline.
 
 ## Mengubah data

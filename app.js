@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  // Halaman pasif: hanya menampilkan data dari data.js, tanpa tombol, form,
-  // atau link yang bisa diklik pengunjung.
+  // Halaman baca-saja: data hanya dari data.js. Pengunjung bisa membuka link
+  // kelas/tugas dan menyalin link, tapi tidak bisa mencentang atau mengubah isi.
 
   const MIN = 6e4, HOUR = 36e5, DAY = 864e5;
   const WIB = 7 * HOUR; // Asia/Jakarta, tanpa daylight saving
@@ -27,10 +27,38 @@
   };
   const jam = c => `${c.mulai.replace(':', '.')}–${c.selesai.replace(':', '.')}`;
 
-  // Link kelas ditampilkan sebagai teks biasa (bisa diseleksi, tidak bisa diklik).
-  const linkText = c => c.link
-    ? `<span class="link-text">${esc(c.link.replace(/^https?:\/\//, ''))}</span>`
-    : `<span class="muted">${esc(c.infoLink || 'Link belum diisi')}</span>`;
+  // Tombol masuk kelas; kalau link tidak dicantumkan, tampilkan keterangan saja.
+  const joinBtn = (c, cls = '', label = `Masuk ${esc(c.platform)}`) => c.link
+    ? `<a class="btn btn-primary ${cls}" data-join href="${esc(c.link)}" target="_blank" rel="noopener">${label}</a>`
+    : `<span class="btn btn-disabled ${cls}" data-join>${esc(c.infoLink || 'Link belum diisi')}</span>`;
+  const copyLinkBtn = (c, cls = '') => c.link
+    ? `<button type="button" class="btn btn-ghost ${cls}" data-copy="${esc(c.link)}">Salin link</button>` : '';
+
+  // ---------- Toast & clipboard ----------
+  let toastTimer;
+  function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+  }
+
+  async function copy(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    toast('Link disalin');
+  }
 
   function countdown(ms) {
     ms = Math.max(0, ms);
@@ -99,10 +127,15 @@
           <strong data-countdown></strong>
         </div>
         ${live ? '<div class="progress"><span data-progress></span></div>' : ''}
-        <p class="hero-link">${esc(c.platform)} · ${linkText(c)}</p>`;
+        <div class="hero-actions">
+          ${joinBtn(c)}
+          ${copyLinkBtn(c)}
+        </div>`;
     }
 
     $('[data-countdown]').textContent = countdown(live ? o.end - now : o.start - now);
+    // Tombol masuk berdenyut mulai 15 menit sebelum kelas.
+    $('[data-join]').classList.toggle('pulse', (!!live || o.start - now <= 15 * MIN) && !!o.c.link);
     const bar = $('[data-progress]');
     if (bar) bar.style.width = `${Math.min(100, ((now - o.start) / (o.end - o.start)) * 100).toFixed(1)}%`;
   }
@@ -134,6 +167,7 @@
             <strong>${esc(c.nama)}</strong>
             <small>${esc(c.platform)} · ${status}</small>
           </div>
+          ${c.link ? joinBtn(c, 'btn-sm', 'Masuk') : ''}
         </div>`;
     }).join('');
   }
@@ -149,18 +183,21 @@
           <h3>${HARI[d]}${d === today ? '<em>Hari ini</em>' : ''}</h3>
           <div>
             ${items.length ? items.map(c => `
-              <div class="slot" style="--c:${c.warna}">
+              <${c.link ? 'a' : 'div'} class="slot" style="--c:${c.warna}" ${c.link ? `href="${esc(c.link)}" target="_blank" rel="noopener" title="Buka ${esc(c.platform)}"` : ''}>
                 <b>${esc(c.singkat || c.nama)}</b>
                 <span>${jam(c)} · ${esc(c.platform)}</span>
-              </div>`).join('') : '<span class="none">Tidak ada kelas</span>'}
+              </${c.link ? 'a' : 'div'}>`).join('') : '<span class="none">Tidak ada kelas</span>'}
           </div>
         </div>`;
     }).join('');
   }
 
-  function renderCourses() {
+  // Kartu mata kuliah, dengan tugasnya langsung di bawah detail kelas.
+  function renderCourses(now) {
     const sorted = [...MATKUL].sort((a, b) => a.hari - b.hari);
-    $('#courses').innerHTML = sorted.map(c => `
+    $('#courses').innerHTML = sorted.map(c => {
+      const list = sortTasks(tasks.filter(t => t.matkulId === c.id), now);
+      return `
       <article class="card course" style="--c:${c.warna}">
         <div class="course-head">
           <div>
@@ -175,9 +212,19 @@
             ? `<ul>${c.dosen.map(d => `<li>${esc(d)}</li>`).join('')}</ul>`
             : '<span class="muted">Belum diisi</span>'}</dd>
           <dt>Kelas</dt><dd>${esc(c.platform)}</dd>
-          <dt>Link</dt><dd>${linkText(c)}</dd>
         </dl>
-      </article>`).join('');
+        <div class="course-actions">
+          ${joinBtn(c, 'btn-sm')}
+          ${copyLinkBtn(c, 'btn-sm')}
+        </div>
+        <div class="course-tasks">
+          <h4>Tugas ${esc(c.singkat || c.nama)}${list.length ? ` <span class="count">${list.length}</span>` : ''}</h4>
+          ${list.length
+            ? list.map(t => taskHtml(t, now)).join('')
+            : '<p class="muted none-task">Belum ada tugas.</p>'}
+        </div>
+      </article>`;
+    }).join('');
   }
 
   // ---------- Tugas ----------
@@ -204,11 +251,10 @@
       given = `<span>Diberikan ${fmtDate(fromWib(y, m - 1, d))}</span>`;
     }
     return `
-      <div class="card task ${dl < now ? 'done' : ''}" style="--c:${c.warna}">
+      <div class="task ${dl < now ? 'done' : ''}" style="--c:${c.warna}">
         <div class="task-body">
           <span class="task-title">${esc(t.judul)}</span>
           <div class="task-meta">
-            <span class="chip" style="--c:${c.warna}">${esc(c.singkat || c.nama)}</span>
             ${given}
             <span>Deadline ${fmtDate(dl)}, ${fmtTime(dl)}</span>
             <span class="tag ${due.cls}">${due.label}</span>
@@ -219,32 +265,35 @@
               <h4>Langkah pengerjaan</h4>
               <ol>${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
             </div>` : ''}
+          ${t.link ? `
+            <div class="task-actions">
+              <a class="btn btn-ghost btn-sm" href="${esc(t.link)}" target="_blank" rel="noopener">${esc(t.linkLabel || 'Buka link')} ↗</a>
+            </div>` : ''}
         </div>
       </div>`;
   }
 
-  function renderTasks(now) {
-    // Tugas aktif dulu (deadline terdekat), lalu yang sudah lewat (terbaru dulu).
-    const sorted = [...tasks].sort((a, b) => {
-      const da = deadlineAbs(a), db = deadlineAbs(b);
-      const pa = da < now, pb = db < now;
-      return (pa - pb) || (pa ? db - da : da - db);
-    });
-    $('#task-list').innerHTML = sorted.length
-      ? sorted.map(t => taskHtml(t, now)).join('')
-      : '<div class="empty">Belum ada tugas.</div>';
-  }
+  // Tugas aktif dulu (deadline terdekat), lalu yang sudah lewat (terbaru dulu).
+  const sortTasks = (list, now) => [...list].sort((a, b) => {
+    const da = deadlineAbs(a), db = deadlineAbs(b);
+    const pa = da < now, pb = db < now;
+    return (pa - pb) || (pa ? db - da : da - db);
+  });
 
   // ---------- Init ----------
   function init() {
     $('#semester-label').textContent = `${SEMESTER.program} · ${SEMESTER.nama}`;
-    renderCourses();
+
+    document.addEventListener('click', e => {
+      const c = e.target.closest('[data-copy]');
+      if (c) copy(c.dataset.copy);
+    });
 
     const slow = () => {
       const now = Date.now();
       renderToday(now);
+      renderCourses(now);
       renderWeek(now);
-      renderTasks(now);
     };
     const fast = () => {
       const now = Date.now();

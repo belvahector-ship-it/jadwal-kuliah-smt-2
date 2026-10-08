@@ -1,5 +1,5 @@
 // Service worker: cache sederhana agar web tetap bisa dibuka saat offline.
-const CACHE = 'kuliah-v2';
+const CACHE = 'kuliah-v3';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './data.js', './icon.svg', './manifest.webmanifest'];
 
 self.addEventListener('install', e => {

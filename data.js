@@ -71,7 +71,7 @@ const MATKUL = [
   },
 ];
 
-// Tugas yang ditampilkan di halaman.
+// Tugas, tampil di bawah kartu mata kuliahnya. matkulId = id di MATKUL.
 // mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM
 const TUGAS = [
   {

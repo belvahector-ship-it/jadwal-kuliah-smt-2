@@ -1,0 +1,105 @@
+// Data kuliah — edit file ini untuk mengubah jadwal, link kelas, atau dosen.
+// hari: 0 = Minggu, 1 = Senin, 2 = Selasa, 3 = Rabu, 4 = Kamis, 5 = Jumat, 6 = Sabtu
+// Semua jam dalam WIB (Asia/Jakarta).
+
+const SEMESTER = {
+  nama: '2026-2027 Ganjil',
+  program: 'S2 MTI 48 Reg',
+  kelas: 'P3148Reg',
+  // Batas akhir jadwal mingguan saat diekspor ke kalender (.ics).
+  // Sesuaikan dengan kalender akademik.
+  akhir: '2027-01-31',
+};
+
+const MATKUL = [
+  {
+    id: 'mp',
+    nama: 'Metodologi Penelitian',
+    kode: 'P31420101',
+    sks: 3,
+    hari: 2,
+    mulai: '19:00',
+    selesai: '21:30',
+    dosen: [],
+    platform: 'Zoom',
+    // Link Zoom sengaja tidak dicantumkan (repo publik). Isi `link` kalau perlu.
+    link: '',
+    infoLink: 'Link Zoom & passcode dibagikan di grup kelas',
+    warna: '#2f6fde',
+  },
+  {
+    id: 'kppk',
+    nama: 'Kecerdasan Pendukung Pengambilan Keputusan',
+    singkat: 'KPPK',
+    kode: 'P31420303',
+    sks: 3,
+    hari: 3,
+    mulai: '19:00',
+    selesai: '21:30',
+    dosen: ['Dr. Abdul Syukur, M.M', 'Dr. Farrikh Al Zami, M.Kom'],
+    platform: 'Google Meet',
+    link: 'https://meet.google.com/ofc-zuuc-zoo',
+    warna: '#0e9f8a',
+  },
+  {
+    id: 'pi',
+    nama: 'Pengambilan Informasi',
+    kode: 'P31420201',
+    sks: 3,
+    hari: 4,
+    mulai: '19:00',
+    selesai: '21:30',
+    dosen: ['Prof. Dr. Ir. Muljono, S.Si, M.Kom', 'Dr. Catur Supriyanto, S.Kom, M.CS'],
+    platform: 'Google Meet',
+    link: 'https://meet.google.com/eai-ddxp-zga',
+    warna: '#8b5cf6',
+  },
+  {
+    id: 'vk',
+    nama: 'Visi Komputer',
+    kode: 'P31420202',
+    sks: 3,
+    hari: 5,
+    mulai: '19:00',
+    selesai: '21:30',
+    dosen: [
+      'Prof. Dr. Pulung Nurtantio Andono, S.T., M.Kom.',
+      'Dr. Ir. Ricardus Anggi Pramunendar, S.Kom, M.Cs',
+    ],
+    platform: 'Google Meet',
+    link: 'https://meet.google.com/qin-vmum-uwy',
+    warna: '#e8792b',
+  },
+];
+
+// Tugas bawaan: otomatis muncul di semua perangkat. Status selesai & checklist
+// tetap disimpan di browser. Naikkan `rev` kalau isi tugas diubah supaya
+// perubahan ikut diperbarui di browser yang sudah pernah membuka web ini.
+// mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM
+const TUGAS = [
+  {
+    id: 'mp-tugas1',
+    rev: 1,
+    matkulId: 'mp',
+    judul: 'Tugas 1: Masalah nyata → pernyataan riset (bahan Bab 1)',
+    mulai: '2026-10-06',
+    deadline: '2026-10-16T23:59', // 10 hari kalender setelah 6 Okt
+    catatan: 'Individu · Laporan PDF 2.500–4.000 kata (di luar daftar pustaka).\n'
+      + 'Bidang: Software Engineering / Data Mining / AI / Image Processing.\n'
+      + 'Format: A4, Times New Roman 12, spasi 1,5, margin 3 cm. Sitasi Vancouver, ≥10 pustaka (≥8 jurnal/prosiding bereputasi).\n'
+      + 'Soal lengkap: lihat Kulino / grup kelas.\n'
+      + 'Kumpul di LMS Kulino (tautan menyusul) sebagai Tugas1_MetPen_NIM_Nama.pdf.\n'
+      + 'Telat: −10%/hari, maks 3 hari. Similarity maks 20%.',
+    langkah: [
+      'Pilih masalah nyata + kumpulkan bukti & urgensi (300–500 kata)',
+      'Solusi yang telah ada: ≥3 solusi bersumber + tingkat keberhasilannya',
+      'Perspektif komputasi: input–proses–output + tabel ≥5 riset terdahulu (5 thn terakhir)',
+      'Kritik satu solusi: kelebihan, keterbatasan berbukti, research gap eksplisit',
+      '≥3 riset lain yang mendukung kritik & alasan gap masih terbuka',
+      'Pernyataan riset: rumusan masalah, 1–3 pertanyaan, tujuan, pendekatan & metrik',
+      'Sampul, daftar pustaka Vancouver, format penulisan',
+      'Lampiran pengungkapan alat bantu AI + cek similarity ≤20%',
+      'Unggah PDF ke Kulino (Tugas1_MetPen_NIM_Nama.pdf)',
+    ],
+  },
+];

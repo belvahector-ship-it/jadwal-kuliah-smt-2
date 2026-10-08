@@ -1,0 +1,14 @@
+{
+  "name": "Kuliah S2 MTI 48",
+  "short_name": "Kuliah",
+  "description": "Jadwal, link kelas, tugas, dan pengingat kuliah S2 MTI 48 Reg.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf6ec",
+  "theme_color": "#13305c",
+  "lang": "id",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

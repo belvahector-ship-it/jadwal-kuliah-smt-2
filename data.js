@@ -6,13 +6,17 @@ const SEMESTER = {
   nama: '2026-2027 Ganjil',
   program: 'S2 MTI 48 Reg',
   kelas: 'P3148Reg',
-  // Perkiraan akhir semester. Sesuaikan dengan kalender akademik.
-  akhir: '2027-01-31',
+  // Pertemuan 1 dimulai pada minggu ini (Selasa, 22 Sep 2026); tiap mata kuliah
+  // mengikuti hari kuliahnya masing-masing, lalu berulang tiap minggu.
+  mulai: '2026-09-22',
+  // Jumlah pertemuan per mata kuliah (asumsi: 14 kuliah + UTS + UAS).
+  pertemuan: 16,
 };
 
 const MATKUL = [
   {
     id: 'mp',
+    inisial: 'MP', // label singkat di kalender
     nama: 'Metodologi Penelitian',
     kode: 'P31420101',
     sks: 3,
@@ -28,6 +32,7 @@ const MATKUL = [
   },
   {
     id: 'kppk',
+    inisial: 'KPPK', // label singkat di kalender
     nama: 'Kecerdasan Pendukung Pengambilan Keputusan',
     singkat: 'KPPK',
     kode: 'P31420303',
@@ -42,6 +47,7 @@ const MATKUL = [
   },
   {
     id: 'pi',
+    inisial: 'PI', // label singkat di kalender
     nama: 'Pengambilan Informasi',
     kode: 'P31420201',
     sks: 3,
@@ -55,6 +61,7 @@ const MATKUL = [
   },
   {
     id: 'vk',
+    inisial: 'VK', // label singkat di kalender
     nama: 'Visi Komputer',
     kode: 'P31420202',
     sks: 3,
@@ -71,12 +78,12 @@ const MATKUL = [
   },
 ];
 
-// Tugas, tampil di bawah kartu mata kuliahnya. matkulId = id di MATKUL.
-// mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM
+// Tugas, dikelompokkan per mata kuliah. matkulId = id di MATKUL.
+// mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM;
+// kosongkan deadline kalau belum diumumkan (tampil "Deadline menyusul").
 const TUGAS = [
   {
     id: 'mp-tugas1',
-    rev: 1,
     matkulId: 'mp',
     judul: 'Tugas 1: Masalah nyata → pernyataan riset (bahan Bab 1)',
     mulai: '2026-10-06',
@@ -98,5 +105,20 @@ const TUGAS = [
       'Lampiran pengungkapan alat bantu AI + cek similarity ≤20%',
       'Unggah PDF ke Kulino (Tugas1_MetPen_NIM_Nama.pdf)',
     ],
+  },  {
+    id: 'pi-tugas1',
+    matkulId: 'pi',
+    judul: 'Rangkuman paper → PPT → video presentasi',
+    mulai: '2026-10-08',
+    deadline: '', // belum diumumkan
+    catatan: 'Paper disediakan Prof. Muljono (link paper menyusul).\n'
+      + 'Pengumpulan dan info lebih lanjut di LMS Kulino.',
+    langkah: [
+      'Rangkum salah satu paper yang disediakan Prof. Muljono (link menyusul)',
+      'Buat rangkuman tersebut menjadi file PPT',
+      'Rekam video presentasi',
+    ],
+    link: 'https://kulino.dinus.ac.id/',
+    linkLabel: 'Buka Kulino',
   },
 ];

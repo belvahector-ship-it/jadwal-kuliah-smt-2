@@ -1,7 +1,7 @@
 {
   "name": "Kuliah S2 MTI 48",
   "short_name": "Kuliah",
-  "description": "Jadwal kuliah dan tugas S2 MTI 48 Reg.",
+  "description": "Jadwal, kalender, link kelas, dan tugas kuliah S2 MTI 48 Reg.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

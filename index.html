@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
+  <meta name="format-detection" content="telephone=no">
   <title>Kuliah S2 MTI</title>
-  <meta name="description" content="Jadwal kuliah dan tugas S2 MTI 48 Reg.">
+  <meta name="description" content="Jadwal, kalender, link kelas, dan tugas kuliah S2 MTI 48 Reg.">
   <meta name="theme-color" content="#13305c">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
@@ -14,6 +14,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      var t = localStorage.getItem('kuliah.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <header class="topbar">
@@ -30,19 +36,123 @@
         <small id="clock-date">&nbsp;</small>
       </div>
     </div>
+    <nav class="wrap tabs" aria-label="Menu utama">
+      <a href="#beranda" data-tab="beranda">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 9.5V20h13V9.5"/></svg>Beranda
+      </a>
+      <a href="#jadwal" data-tab="jadwal">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="8.5"/></svg>Jadwal
+      </a>
+      <a href="#kalender" data-tab="kalender">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Kalender
+      </a>
+      <a href="#tugas" data-tab="tugas">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tugas
+        <span class="tab-badge" id="task-badge" hidden></span>
+      </a>
+      <a href="#pengingat" data-tab="pengingat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0"/></svg>Pengingat
+      </a>
+    </nav>
   </header>
 
   <main class="wrap">
-    <div id="hero" class="hero"></div>
+    <!-- BERANDA -->
+    <section id="beranda" class="view">
+      <div id="hero" class="hero"></div>
 
-    <div class="section-head"><h2>Hari ini</h2></div>
-    <div id="today-list" class="stack"></div>
+      <div class="section-head"><h2>Hari ini</h2></div>
+      <div id="today-list" class="stack"></div>
 
-    <div class="section-head"><h2>Mata kuliah &amp; tugas</h2></div>
-    <div id="courses" class="stack"></div>
+      <div class="section-head">
+        <h2>Tugas terdekat</h2>
+        <a href="#tugas" class="link">Lihat semua</a>
+      </div>
+      <div id="upcoming-tasks" class="stack"></div>
+    </section>
 
-    <div class="section-head"><h2>Jadwal mingguan</h2></div>
-    <div id="week" class="week"></div>
+    <!-- JADWAL -->
+    <section id="jadwal" class="view" hidden>
+      <div class="section-head"><h2>Jadwal mingguan</h2></div>
+      <div id="week" class="week"></div>
+
+      <div class="section-head"><h2>Mata kuliah &amp; link kelas</h2></div>
+      <div id="courses" class="grid"></div>
+    </section>
+
+    <!-- KALENDER -->
+    <section id="kalender" class="view" hidden>
+      <div class="section-head">
+        <h2>Kalender kuliah 2026</h2>
+        <small class="muted" id="cal-note"></small>
+      </div>
+      <div class="month-chips" id="month-chips" aria-label="Pilih bulan"></div>
+      <div class="card cal">
+        <div class="cal-head">
+          <button type="button" class="icon-btn" id="cal-prev" aria-label="Bulan sebelumnya">‹</button>
+          <h3 id="cal-title"></h3>
+          <button type="button" class="icon-btn" id="cal-next" aria-label="Bulan berikutnya">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend" id="cal-legend"></div>
+      </div>
+      <div class="section-head"><h2 id="cal-list-title">Pertemuan bulan ini</h2></div>
+      <div id="cal-list" class="stack"></div>
+    </section>
+
+    <!-- TUGAS -->
+    <section id="tugas" class="view" hidden>
+      <div id="task-groups" class="stack"></div>
+    </section>
+
+    <!-- PENGINGAT -->
+    <section id="pengingat" class="view" hidden>
+      <div class="card settings">
+        <h2>Notifikasi browser</h2>
+        <p class="muted">Muncul sebelum kelas mulai dan menjelang deadline tugas (H-1 dan 3 jam sebelumnya).
+          Notifikasi hanya jalan selama web ini masih terbuka (boleh di tab lain). Supaya pengingat
+          tetap masuk saat web ditutup, pakai ekspor kalender di bawah.</p>
+        <div class="row">
+          <span id="notif-status" class="status-pill">Nonaktif</span>
+          <button type="button" class="btn btn-primary btn-sm" id="notif-toggle">Aktifkan</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="notif-test">Tes notifikasi</button>
+        </div>
+        <label class="field inline">
+          <span>Ingatkan sebelum kelas</span>
+          <select id="lead-select">
+            <option value="5">5 menit</option>
+            <option value="10">10 menit</option>
+            <option value="15">15 menit</option>
+            <option value="30">30 menit</option>
+            <option value="60">1 jam</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="card settings">
+        <h2>Pengingat lewat kalender</h2>
+        <p class="muted">Unduh file .ics lalu buka atau impor ke Google Calendar, Apple Calendar, atau Outlook.
+          Pengingat akan masuk ke HP walaupun web ini ditutup.</p>
+        <div class="row">
+          <button type="button" class="btn btn-primary btn-sm" id="ics-classes">Unduh jadwal kelas</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="ics-tasks">Unduh deadline tugas</button>
+        </div>
+        <p class="hint">Di Google Calendar web: Setelan → Impor &amp; ekspor → Impor. Berisi
+          <span id="ics-count"></span> pertemuan tiap mata kuliah mulai <span id="ics-start"></span>.</p>
+      </div>
+
+      <div class="card settings">
+        <h2>Tampilan</h2>
+        <label class="field inline">
+          <span>Tema</span>
+          <select id="theme-select">
+            <option value="auto">Ikuti perangkat</option>
+            <option value="light">Terang</option>
+            <option value="dark">Gelap</option>
+          </select>
+        </label>
+      </div>
+    </section>
   </main>
 
   <footer class="wrap footer">

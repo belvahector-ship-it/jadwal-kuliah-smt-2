@@ -1,5 +1,6 @@
-// Service worker: cache sederhana agar web tetap bisa dibuka saat offline.
-const CACHE = 'kuliah-v3';
+// Service worker: cache sederhana agar web tetap bisa dibuka saat offline,
+// dan menangani klik notifikasi.
+const CACHE = 'kuliah-v4';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './data.js', './icon.svg', './manifest.webmanifest'];
 
 self.addEventListener('install', e => {
@@ -29,3 +30,8 @@ self.addEventListener('fetch', e => {
   );
 });
 
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = e.notification.data && e.notification.data.url;
+  e.waitUntil(url ? self.clients.openWindow(url) : self.clients.openWindow('./'));
+});

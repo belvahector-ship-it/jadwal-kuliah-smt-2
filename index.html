@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
   <title>Kuliah S2 MTI</title>
-  <meta name="description" content="Jadwal, link kelas, tugas, dan pengingat kuliah S2 MTI 48 Reg.">
+  <meta name="description" content="Jadwal kuliah dan tugas S2 MTI 48 Reg.">
   <meta name="theme-color" content="#13305c">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
@@ -13,12 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script>
-    try {
-      var t = localStorage.getItem('kuliah.theme');
-      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-    } catch (e) {}
-  </script>
 </head>
 <body>
   <header class="topbar">
@@ -35,161 +30,27 @@
         <small id="clock-date">&nbsp;</small>
       </div>
     </div>
-    <nav class="wrap tabs" aria-label="Menu utama">
-      <a href="#beranda" data-tab="beranda">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 9.5V20h13V9.5"/></svg>Beranda
-      </a>
-      <a href="#jadwal" data-tab="jadwal">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Jadwal
-      </a>
-      <a href="#tugas" data-tab="tugas">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tugas
-        <span class="tab-badge" id="task-badge" hidden></span>
-      </a>
-      <a href="#pengingat" data-tab="pengingat">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0"/></svg>Pengingat
-      </a>
-    </nav>
   </header>
 
   <main class="wrap">
-    <!-- BERANDA -->
-    <section id="beranda" class="view">
-      <div id="hero" class="hero"></div>
+    <div id="hero" class="hero"></div>
 
-      <div class="section-head"><h2>Hari ini</h2></div>
-      <div id="today-list" class="stack"></div>
+    <div class="section-head"><h2>Hari ini</h2></div>
+    <div id="today-list" class="stack"></div>
 
-      <div class="section-head">
-        <h2>Tugas terdekat</h2>
-        <a href="#tugas" class="link">Lihat semua</a>
-      </div>
-      <div id="upcoming-tasks" class="stack"></div>
-    </section>
+    <div class="section-head"><h2>Tugas</h2></div>
+    <div id="task-list" class="stack"></div>
 
-    <!-- JADWAL -->
-    <section id="jadwal" class="view" hidden>
-      <div class="section-head"><h2>Jadwal mingguan</h2></div>
-      <div id="week" class="week"></div>
+    <div class="section-head"><h2>Jadwal mingguan</h2></div>
+    <div id="week" class="week"></div>
 
-      <div class="section-head"><h2>Mata kuliah &amp; link kelas</h2></div>
-      <div id="courses" class="grid"></div>
-    </section>
-
-    <!-- TUGAS -->
-    <section id="tugas" class="view" hidden>
-      <form id="task-form" class="card form" autocomplete="off">
-        <div class="form-title">
-          <h2 id="form-heading">Tambah tugas</h2>
-          <button type="button" class="btn btn-ghost btn-sm" id="cancel-edit" hidden>Batal edit</button>
-        </div>
-        <div class="form-grid">
-          <label class="field">
-            <span>Mata kuliah</span>
-            <select name="matkulId" id="task-matkul" required></select>
-          </label>
-          <label class="field">
-            <span>Deadline (WIB)</span>
-            <input type="datetime-local" name="deadline" required>
-          </label>
-          <label class="field span-2">
-            <span>Judul tugas</span>
-            <input type="text" name="judul" placeholder="cth. Review 3 jurnal tentang IR" required maxlength="160">
-          </label>
-          <label class="field span-2">
-            <span>Link pengumpulan / materi <em>(opsional)</em></span>
-            <input type="url" name="link" placeholder="https://…">
-          </label>
-          <label class="field span-2">
-            <span>Catatan <em>(opsional)</em></span>
-            <textarea name="catatan" rows="2" maxlength="1000" placeholder="Format, jumlah halaman, kelompok, dll."></textarea>
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary" id="submit-task">Simpan tugas</button>
-      </form>
-
-      <div class="toolbar">
-        <div class="segmented" role="group" aria-label="Filter status">
-          <button type="button" data-status="aktif" class="active">Aktif</button>
-          <button type="button" data-status="selesai">Selesai</button>
-          <button type="button" data-status="semua">Semua</button>
-        </div>
-        <select id="filter-matkul" aria-label="Filter mata kuliah"></select>
-      </div>
-      <div id="task-list" class="stack"></div>
-    </section>
-
-    <!-- PENGINGAT -->
-    <section id="pengingat" class="view" hidden>
-      <div class="card settings">
-        <h2>Notifikasi browser</h2>
-        <p class="muted">Muncul sebelum kelas mulai dan menjelang deadline tugas. Notifikasi hanya jalan
-          selama web ini masih terbuka (boleh di tab lain). Supaya pengingat tetap masuk saat web
-          ditutup, pakai ekspor kalender di bawah.</p>
-        <div class="row">
-          <span id="notif-status" class="status-pill">Nonaktif</span>
-          <button type="button" class="btn btn-primary btn-sm" id="notif-toggle">Aktifkan</button>
-          <button type="button" class="btn btn-ghost btn-sm" id="notif-test">Tes notifikasi</button>
-        </div>
-        <label class="field inline">
-          <span>Ingatkan sebelum kelas</span>
-          <select id="lead-select">
-            <option value="5">5 menit</option>
-            <option value="10">10 menit</option>
-            <option value="15">15 menit</option>
-            <option value="30">30 menit</option>
-            <option value="60">1 jam</option>
-          </select>
-        </label>
-        <label class="check">
-          <input type="checkbox" id="task-notif">
-          <span>Ingatkan deadline tugas (H-1 dan 3 jam sebelumnya)</span>
-        </label>
-      </div>
-
-      <div class="card settings">
-        <h2>Pengingat lewat kalender</h2>
-        <p class="muted">Unduh file .ics lalu buka atau impor ke Google Calendar, Apple Calendar, atau Outlook.
-          Pengingat akan masuk ke HP walaupun web ini ditutup.</p>
-        <div class="row">
-          <button type="button" class="btn btn-primary btn-sm" id="ics-classes">Unduh jadwal kelas</button>
-          <button type="button" class="btn btn-ghost btn-sm" id="ics-tasks">Unduh deadline tugas</button>
-        </div>
-        <p class="hint">Di Google Calendar web: Setelan → Impor &amp; ekspor → Impor. Kelas diulang
-          tiap minggu sampai <span id="semester-end"></span>.</p>
-      </div>
-
-      <div class="card settings">
-        <h2>Cadangan data</h2>
-        <p class="muted">Tugas tersimpan di browser perangkat ini. Ekspor untuk cadangan atau untuk dipindah ke perangkat lain.</p>
-        <div class="row">
-          <button type="button" class="btn btn-ghost btn-sm" id="export-json">Ekspor tugas (.json)</button>
-          <label class="btn btn-ghost btn-sm file-btn">
-            Impor tugas
-            <input type="file" id="import-json" accept="application/json,.json" hidden>
-          </label>
-        </div>
-      </div>
-
-      <div class="card settings">
-        <h2>Tampilan</h2>
-        <label class="field inline">
-          <span>Tema</span>
-          <select id="theme-select">
-            <option value="auto">Ikuti perangkat</option>
-            <option value="light">Terang</option>
-            <option value="dark">Gelap</option>
-          </select>
-        </label>
-      </div>
-    </section>
+    <div class="section-head"><h2>Mata kuliah</h2></div>
+    <div id="courses" class="grid"></div>
   </main>
 
   <footer class="wrap footer">
-    <small>Semua waktu dalam WIB · Data tugas tersimpan di browser ini</small>
+    <small>Semua waktu dalam WIB</small>
   </footer>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="data.js"></script>
   <script src="app.js"></script>

@@ -6,8 +6,7 @@ const SEMESTER = {
   nama: '2026-2027 Ganjil',
   program: 'S2 MTI 48 Reg',
   kelas: 'P3148Reg',
-  // Batas akhir jadwal mingguan saat diekspor ke kalender (.ics).
-  // Sesuaikan dengan kalender akademik.
+  // Perkiraan akhir semester. Sesuaikan dengan kalender akademik.
   akhir: '2027-01-31',
 };
 
@@ -72,9 +71,7 @@ const MATKUL = [
   },
 ];
 
-// Tugas bawaan: otomatis muncul di semua perangkat. Status selesai & checklist
-// tetap disimpan di browser. Naikkan `rev` kalau isi tugas diubah supaya
-// perubahan ikut diperbarui di browser yang sudah pernah membuka web ini.
+// Tugas yang ditampilkan di halaman.
 // mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM
 const TUGAS = [
   {

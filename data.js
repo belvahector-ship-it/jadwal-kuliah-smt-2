@@ -81,6 +81,7 @@ const MATKUL = [
 // Tugas, dikelompokkan per mata kuliah. matkulId = id di MATKUL.
 // mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM;
 // kosongkan deadline kalau belum diumumkan (tampil "Deadline menyusul").
+// Link: `links: [{ label, url }, ...]` untuk beberapa tombol, atau `link` + `linkLabel`.
 const TUGAS = [
   {
     id: 'mp-tugas1',
@@ -105,20 +106,23 @@ const TUGAS = [
       'Lampiran pengungkapan alat bantu AI + cek similarity ≤20%',
       'Unggah PDF ke Kulino (Tugas1_MetPen_NIM_Nama.pdf)',
     ],
-  },  {
+  },
+  {
     id: 'pi-tugas1',
     matkulId: 'pi',
     judul: 'Rangkuman paper → PPT → video presentasi',
     mulai: '2026-10-08',
     deadline: '', // belum diumumkan
-    catatan: 'Paper disediakan Prof. Muljono (link paper menyusul).\n'
+    catatan: 'Bahan: paper yang disediakan Prof. Muljono (tombol "Bahan paper").\n'
       + 'Pengumpulan dan info lebih lanjut di LMS Kulino.',
     langkah: [
-      'Rangkum salah satu paper yang disediakan Prof. Muljono (link menyusul)',
+      'Rangkum salah satu paper yang disediakan Prof. Muljono',
       'Buat rangkuman tersebut menjadi file PPT',
       'Rekam video presentasi',
     ],
-    link: 'https://kulino.dinus.ac.id/',
-    linkLabel: 'Buka Kulino',
+    links: [
+      { label: 'Bahan paper', url: 'https://belv.lol/pi' },
+      { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
+    ],
   },
 ];

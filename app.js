@@ -106,6 +106,8 @@
     return dayStart(isoDay(date), time);
   };
   const isPast = (t, now) => hasDeadline(t) && deadlineAbs(t) < now;
+  // Link tugas: `links: [{ label, url }]`, atau `link` + `linkLabel` untuk satu link saja.
+  const taskLinks = t => t.links || (t.link ? [{ label: t.linkLabel || 'Buka link', url: t.link }] : []);
 
   // Urutan: deadline terdekat, lalu yang deadline-nya menyusul, lalu yang sudah lewat.
   const sortTasks = (list, now) => [...list].sort((a, b) => {
@@ -400,9 +402,9 @@
               <h4>Yang harus dikerjakan</h4>
               <ol>${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
             </div>` : ''}
-          ${!compact && t.link ? `
+          ${!compact && taskLinks(t).length ? `
             <div class="task-actions">
-              <a class="btn btn-ghost btn-sm" href="${esc(t.link)}" target="_blank" rel="noopener">${esc(t.linkLabel || 'Buka link')} ↗</a>
+              ${taskLinks(t).map((l, i) => `<a class="btn ${i ? 'btn-ghost' : 'btn-primary'} btn-sm" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}
             </div>` : ''}
         </div>
       </div>`;
@@ -523,7 +525,7 @@
         fire(`t:${t.id}:${t.deadline}:${step[0]}`,
           `Deadline ${step[1]}`,
           `${t.judul} (${c.singkat || c.nama}), ${fmtTime(dl)} WIB`,
-          t.link || location.href.split('#')[0] + '#tugas');
+          location.href.split('#')[0] + '#tugas');
         if (step[0] === 3 * HOUR) fired[`t:${t.id}:${t.deadline}:${DAY}`] = now;
       }
     }
@@ -612,8 +614,8 @@
         start: dl - 30 * MIN,
         end: dl,
         title: `Deadline: ${t.judul} (${c.singkat || c.nama})`,
-        desc: [t.catatan, t.link].filter(Boolean).join('\n'),
-        url: t.link || '',
+        desc: [t.catatan, ...taskLinks(t).map(l => `${l.label}: ${l.url}`)].filter(Boolean).join('\n'),
+        url: taskLinks(t)[0]?.url || '',
         alarms: ['P1D', 'PT3H'],
       };
     });

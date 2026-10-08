@@ -112,7 +112,7 @@ const TUGAS = [
     matkulId: 'pi',
     judul: 'Rangkuman paper → PPT → video presentasi',
     mulai: '2026-10-08',
-    deadline: '', // belum diumumkan
+    deadline: '2026-10-15T19:00', // dikumpulkan pertemuan depan (pertemuan 4)
     catatan: 'Bahan: paper yang disediakan Prof. Muljono (tombol "Bahan paper").\n'
       + 'Pengumpulan dan info lebih lanjut di LMS Kulino.',
     langkah: [

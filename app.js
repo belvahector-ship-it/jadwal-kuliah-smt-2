@@ -625,9 +625,11 @@
 
   // ---------- Tema ----------
   function applyTheme(v) {
-    if (v === 'light' || v === 'dark') document.documentElement.dataset.theme = v;
-    else delete document.documentElement.dataset.theme;
-    try { v === 'auto' ? localStorage.removeItem(KEY.theme) : localStorage.setItem(KEY.theme, v); } catch { /* abaikan */ }
+    // Termux = bawaan; 'auto' mengikuti terang/gelap perangkat.
+    if (v === 'auto') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = v;
+    $('meta[name="theme-color"]').content = v === 'termux' ? '#000000' : '#13305c';
+    try { v === 'termux' ? localStorage.removeItem(KEY.theme) : localStorage.setItem(KEY.theme, v); } catch { /* abaikan */ }
   }
 
   // ---------- Navigasi tab ----------
@@ -653,8 +655,8 @@
 
     // Pengaturan (hanya tersimpan di browser pengunjung sendiri)
     $('#lead-select').value = String(settings.leadMin);
-    let theme = 'auto';
-    try { theme = localStorage.getItem(KEY.theme) || 'auto'; } catch { /* abaikan */ }
+    let theme = 'termux';
+    try { theme = localStorage.getItem(KEY.theme) || 'termux'; } catch { /* abaikan */ }
     $('#theme-select').value = theme;
     renderNotifStatus();
 

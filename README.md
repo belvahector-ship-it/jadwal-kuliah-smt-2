@@ -10,7 +10,7 @@ Halamannya **baca-saja**: pengunjung bisa membuka link kelas, menyalin link, men
 - **Jadwal**: jadwal mingguan dan kartu mata kuliah (kode, SKS, dosen, pertemuan berikutnya, tombol masuk/salin link).
 - **Kalender**: kalender 2026 per bulan. Setiap hari kuliah dilingkari dengan warna mata kuliah, diberi label singkat dan nomor pertemuan (P1, P2, …). Pertemuan 1 dimulai 22 Sep 2026.
 - **Tugas**: tugas dikelompokkan per mata kuliah, lengkap dengan deadline, keterangan, dan langkah pengerjaan.
-- **Pengingat**: notifikasi browser sebelum kelas dan menjelang deadline, unduhan kalender **.ics**, dan pilihan tema.
+- **Pengingat**: notifikasi browser sebelum kelas dan menjelang deadline, unduhan kalender **.ics**, dan pilihan tema: **Termux** (bawaan, gaya terminal hijau-hitam), Terang, Gelap, atau Ikuti perangkat.
 
 ## Mengubah data
 
@@ -21,6 +21,7 @@ Jadwal, link, dosen, dan tugas ada di **`data.js`** (array `MATKUL` dan `TUGAS`)
 ```
 index.html            halaman utama (5 tab)
 style.css             tampilan (tema terang/gelap)
+theme-termux.css      tema Termux (bawaan)
 app.js                jadwal, kalender, tugas, notifikasi, ekspor .ics
 data.js               data mata kuliah dan tugas ← edit di sini
 sw.js                 service worker (offline + klik notifikasi)

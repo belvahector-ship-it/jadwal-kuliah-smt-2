@@ -1,23 +1,25 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-theme="termux">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
   <title>Kuliah S2 MTI</title>
   <meta name="description" content="Jadwal, kalender, link kelas, dan tugas kuliah S2 MTI 48 Reg.">
-  <meta name="theme-color" content="#13305c">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme-termux.css">
   <script>
     try {
       var t = localStorage.getItem('kuliah.theme');
       if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      else if (t === 'auto') delete document.documentElement.dataset.theme;
     } catch (e) {}
   </script>
 </head>
@@ -146,6 +148,7 @@
         <label class="field inline">
           <span>Tema</span>
           <select id="theme-select">
+            <option value="termux">Termux</option>
             <option value="auto">Ikuti perangkat</option>
             <option value="light">Terang</option>
             <option value="dark">Gelap</option>
@@ -155,8 +158,35 @@
     </section>
   </main>
 
-  <footer class="wrap footer">
-    <small>Semua waktu dalam WIB</small>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-about">
+        <h2>Kuliah S2 MTI 48</h2>
+        <p>Jadwal, kalender, link kelas, dan tugas kelas P3148Reg, Magister Teknik Informatika
+          UDINUS, semester 2026-2027 Ganjil. Semua waktu dalam WIB.</p>
+      </div>
+      <nav aria-label="Halaman">
+        <h2>Halaman</h2>
+        <ul>
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#jadwal">Jadwal</a></li>
+          <li><a href="#kalender">Kalender</a></li>
+          <li><a href="#tugas">Tugas</a></li>
+          <li><a href="#pengingat">Pengingat</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Tautan">
+        <h2>Tautan</h2>
+        <ul>
+          <li><a href="https://kulino.dinus.ac.id/" target="_blank" rel="noopener">LMS Kulino</a></li>
+          <li><a href="https://github.com/belvahector-ship-it/jadwal-kuliah-smt-2" target="_blank" rel="noopener">Kode sumber</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="wrap footer-bottom">
+      <small>© 2026 S2 MTI 48 Reg · P3148Reg</small>
+      <small>Dibuat &amp; dikembangkan oleh <a href="https://ibstudio.my.id" target="_blank" rel="noopener">ibstudio.my.id</a> (Belva Fahrozi Chiangmaitri)</small>
+    </div>
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>

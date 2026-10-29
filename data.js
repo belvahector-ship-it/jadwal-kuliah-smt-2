@@ -40,7 +40,7 @@ const MATKUL = [
     hari: 3,
     mulai: '19:00',
     selesai: '21:30',
-    dosen: ['Dr. Abdul Syukur, M.M', 'Dr. Farrikh Al Zami, M.Kom'],
+    dosen: ['Dr. Abdul Syukur, M.M', 'Dr. Farrikh Alzami, M.Kom'],
     platform: 'Google Meet',
     link: 'https://meet.google.com/ofc-zuuc-zoo',
     warna: '#0e9f8a',
@@ -82,6 +82,7 @@ const MATKUL = [
 // mulai/deadline dalam WIB. deadline format: YYYY-MM-DDTHH:MM;
 // kosongkan deadline kalau belum diumumkan (tampil "Deadline menyusul").
 // Link: `links: [{ label, url }, ...]` untuk beberapa tombol, atau `link` + `linkLabel`.
+// dosen (opsional): nama dosen pemberi tugas, tampil di bawah judul tugas.
 const TUGAS = [
   {
     id: 'mp-tugas1',
@@ -129,11 +130,14 @@ const TUGAS = [
     id: 'kppk-lstm',
     matkulId: 'kppk',
     judul: 'Essay terkait LSTM: rangkuman 5 jurnal',
+    dosen: 'Dr. Farrikh Alzami, M.Kom',
     mulai: '2026-10-28',
     deadline: '2026-11-04T21:00', // instruksi dosen 21.00 WIB; Kulino baru tutup 23.00
-    catatan: 'Ambil 5 jurnal terkait LSTM dari ScienceDirect open access (topik bebas).\n'
+    catatan: 'Kulino: Pertemuan 6 / Topik 6 · Kecerdasan Pendukung Pengambilan Keputusan (DSS AI).\n'
+      + 'Ambil 5 jurnal terkait LSTM dari ScienceDirect open access (topik bebas).\n'
       + 'Rangkum dalam tabel: No · Judul · Masalah · Metode · Hasil (MSE/RMSE/dll) · Kelebihan · Kekurangan.\n'
-      + 'Kumpul lewat "Add submission" di Kulino paling lambat Rabu, 4 Nov 2026 pukul 21.00 WIB.',
+      + 'Kumpul lewat "Add submission" di Kulino paling lambat Rabu, 4 Nov 2026 pukul 21.00 WIB '
+      + '(sistem Kulino baru menutup pukul 23.00).',
     langkah: [
       'Cari 5 jurnal LSTM di ScienceDirect (filter Open access)',
       'Isi tabel: judul, masalah, dan metode tiap jurnal',
@@ -143,7 +147,7 @@ const TUGAS = [
     ],
     links: [
       { label: 'ScienceDirect', url: 'https://www.sciencedirect.com/search?qs=LSTM&accessTypes=openaccess' },
-      { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
+      { label: 'Kulino (pengumpulan)', url: 'https://kulino.dinus.ac.id/mod/assign/view.php?id=27970' },
     ],
   },
 ];

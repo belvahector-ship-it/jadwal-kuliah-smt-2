@@ -385,6 +385,7 @@
       const n = meetingNo(c, day);
       given = `<span>Diberikan ${fmtDate(dayStart(day))}${n ? ` · ${meetingLabel(n).toLowerCase()}` : ''}</span>`;
     }
+    if (t.dosen) given += `<span>Dosen: ${esc(t.dosen)}</span>`;
     const deadline = hasDeadline(t)
       ? `<span>Deadline ${fmtDate(deadlineAbs(t))}, ${fmtTime(deadlineAbs(t))}</span>` : '';
     return `

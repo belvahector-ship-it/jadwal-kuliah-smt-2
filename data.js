@@ -125,4 +125,25 @@ const TUGAS = [
       { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
     ],
   },
+  {
+    id: 'kppk-lstm',
+    matkulId: 'kppk',
+    judul: 'Essay terkait LSTM: rangkuman 5 jurnal',
+    mulai: '2026-10-28',
+    deadline: '2026-11-04T21:00', // instruksi dosen 21.00 WIB; Kulino baru tutup 23.00
+    catatan: 'Ambil 5 jurnal terkait LSTM dari ScienceDirect open access (topik bebas).\n'
+      + 'Rangkum dalam tabel: No · Judul · Masalah · Metode · Hasil (MSE/RMSE/dll) · Kelebihan · Kekurangan.\n'
+      + 'Kumpul lewat "Add submission" di Kulino paling lambat Rabu, 4 Nov 2026 pukul 21.00 WIB.',
+    langkah: [
+      'Cari 5 jurnal LSTM di ScienceDirect (filter Open access)',
+      'Isi tabel: judul, masalah, dan metode tiap jurnal',
+      'Catat hasil (MSE/RMSE/dll), kelebihan, dan kekurangan',
+      'Rapikan tabel & cantumkan sumber jurnal',
+      'Unggah ke Kulino (Add submission)',
+    ],
+    links: [
+      { label: 'ScienceDirect', url: 'https://www.sciencedirect.com/search?qs=LSTM&accessTypes=openaccess' },
+      { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
+    ],
+  },
 ];

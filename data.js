@@ -150,4 +150,24 @@ const TUGAS = [
       { label: 'Kulino (pengumpulan)', url: 'https://kulino.dinus.ac.id/mod/assign/view.php?id=27970' },
     ],
   },
+  {
+    id: 'vk-2paper',
+    matkulId: 'vk',
+    judul: 'Cari 2 paper: metode tesis + metode yang sama untuk data image/video',
+    mulai: '2026-10-30', // kelas hari itu diganti penugasan
+    deadline: '2026-11-06T19:00', // "deadline hari Jumat"; jam belum disebut, dipakai awal kelas
+    catatan: 'Kelas diganti penugasan (info dari dosen via grup).\n'
+      + 'Paper 1: terkait metode yang digunakan untuk tesis.\n'
+      + 'Paper 2: metode yang sama, tetapi diterapkan pada data image atau video.\n'
+      + 'Cara/format pengumpulan belum disebutkan; cek grup kelas atau Kulino.',
+    langkah: [
+      'Tentukan metode yang akan dipakai untuk tesis',
+      'Cari paper 1: penelitian yang memakai metode tersebut',
+      'Cari paper 2: metode yang sama pada data image/video',
+      'Kumpulkan sesuai arahan dosen',
+    ],
+    links: [
+      { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
+    ],
+  },
 ];

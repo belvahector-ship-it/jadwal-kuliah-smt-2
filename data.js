@@ -170,4 +170,31 @@ const TUGAS = [
       { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
     ],
   },
+  {
+    id: 'pi-uts',
+    matkulId: 'pi',
+    judul: 'UTS: pencarian dokumen SciFact (BEIR), BM25 vs dense retrieval',
+    mulai: '2026-11-09',
+    deadline: '2026-11-17T23:59',
+    catatan: 'Dataset: SciFact dari BEIR (4 file, salah satunya corpus.jsonl).\n'
+      + 'Bandingkan pencarian lexical (BM25) dan semantic (sentence_transformers), hitung performanya, lalu analisis.\n'
+      + 'Dikumpulkan: 1 dokumen PDF berisi tahap implementasi + hasil (screenshot) + analisis, '
+      + 'dengan source code dilampirkan di laporan.\n'
+      + 'Kumpul lewat "Add submission" di Kulino paling lambat Selasa, 17 Nov 2026 pukul 23.59 WIB.',
+    langkah: [
+      'Siapkan pustaka (rank_bm25, sentence_transformers, dst.)',
+      'Baca 4 file dataset SciFact (termasuk corpus.jsonl)',
+      'Ambil 5 kueri secara acak',
+      'Pencarian dengan BM25 (lexical search)',
+      'Pencarian dengan sentence_transformers (dense retrieval / semantic search)',
+      'Hitung performa lexical & semantic search',
+      'Lakukan analisis perbandingan',
+      'Susun PDF: tahap implementasi + screenshot hasil + analisis + source code',
+      'Unggah PDF ke Kulino (Add submission)',
+    ],
+    links: [
+      { label: 'Dataset SciFact (BEIR)', url: 'https://github.com/beir-cellar/beir' },
+      { label: 'Kulino', url: 'https://kulino.dinus.ac.id/' },
+    ],
+  },
 ];
